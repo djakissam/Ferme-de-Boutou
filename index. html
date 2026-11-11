@@ -118,3 +118,169 @@ button:active{transform:scale(.97)}
       </div>
       <div id="listPaiements"></div>
     </div>
+    <div id="tab-agri" class="card tab" style="display:none">
+      <h2>🌱 Tableau de bord Agriculture - Parcelles + Cultures + Récoltes</h2>
+      <div class="no-print">
+        <h3>Parcelle</h3>
+        <div class="row"><input id="parNom" placeholder="Parcelle : P1"><input id="parSurf" placeholder="Surface ha : 2"></div>
+        <button class="b-grey" onclick="addParcelle()">+ Ajouter parcelle</button>
+        <div id="listParcelle"></div>
+        <h3>Culture - Pérenne / Saisonnière</h3>
+        <div class="row"><select id="cuParcelle"></select><select id="cuType"><option>Pérenne</option><option>Saisonnière</option></select></div>
+        <div class="row"><input id="cuNom" placeholder="Manguier, Maïs, Manioc..."><input id="cuPieds" type="number" placeholder="Nombre pieds / Qté semée"></div>
+        <div class="row"><input id="cuSemis" type="date"><input id="cuRecoltePrev" type="date"></div>
+        <button class="b-green" onclick="addCulture()">🌱 + Ajouter culture</button>
+      </div>
+      <div id="listCultures"></div>
+      <div class="no-print">
+        <h3>Entretien</h3>
+        <div class="row"><select id="eCu"></select><select id="eType"><option>Labour</option><option>Arrosage</option><option>Taille</option><option>Traitement</option><option>Désherbage</option></select></div>
+        <input id="eDesc" placeholder="Détail : ex Labour P3, 12/11">
+        <button class="b-blue" onclick="addEntretien()">+ Ajouter entretien</button>
+      </div>
+      <div id="listEntretiens"></div>
+      <div class="no-print">
+        <h3>Récolte</h3>
+        <div class="row"><select id="rCu"></select><input id="rQte" type="number" placeholder="Quantité kg"><input id="rDate" type="date"></div>
+        <button class="b-orange" onclick="addRecolte()">🌾 + Ajouter récolte</button>
+      </div>
+      <div id="listRecoltes"></div>
+    </div>
+
+    <div id="tab-elevage" class="card tab" style="display:none">
+      <h2>🐄 Tableau de bord Élevage - 3 Familles</h2>
+      <div class="no-print">
+        <div class="row"><select id="elFam"><option>Polygastriques</option><option>Monogastriques</option><option>Autres</option></select><select id="elEsp"><option>Bovins</option><option>Ovins</option><option>Caprins</option><option>Porcs</option><option>Volailles</option><option>Lapins</option><option>Poissons</option><option>Abeilles</option><option>Asticots</option></select></div>
+        <div class="row"><input id="elLot" placeholder="Lot : Lot A Vaches"><input id="elEff" type="number" placeholder="Effectif"></div>
+        <input id="elStock" type="number" placeholder="Stock aliment sacs : ex 10">
+        <button class="b-blue" onclick="addLot()">🐄 + Ajouter lot</button>
+      </div>
+      <div id="listLots"></div>
+      <div class="no-print">
+        <h3>Alimentation + Soin + Mouvement Effectif</h3>
+        <div class="row"><select id="alLot"></select><input id="alQte" placeholder="Ration : ex 2 sacs / jour"><input id="alDate" type="date"></div>
+        <button class="b-green" onclick="addAlim()">🥣 + Alimentation</button>
+        <div class="row"><input id="soinDesc" placeholder="Soin : Vaccin, Vermifuge"><input id="soinMort" type="number" placeholder="Mortalité : 0"></div>
+        <button class="b-orange" onclick="addSoin()">🩺 + Soin / Mortalité</button>
+      </div>
+      <div id="listAlimSoin"></div>
+    </div>
+
+    <div id="tab-compta" class="card tab" style="display:none">
+      <h2>💰 Ventes & Compta</h2>
+      <div class="no-print">
+        <div class="row"><select id="vType"><option>Récolte</option><option>Animal</option><option>Autre</option></select><input id="vProd" placeholder="Produit : Maïs, Porc, Mangue"></div>
+        <div class="row"><input id="vClient" placeholder="Client : Marché Maroua"><input id="vQte" type="number" placeholder="Quantité"><input id="vMontant" type="number" placeholder="Montant F"></div>
+        <button class="b-green" onclick="addVente()">💰 + Enregistrer vente</button>
+        <h3>Dépense</h3>
+        <div class="row"><input id="dDesc" placeholder="Dépense : Achat aliment"><input id="dMontant" type="number" placeholder="Montant F"></div>
+        <button class="b-red" onclick="addDepense()">➖ + Enregistrer dépense</button>
+      </div>
+      <div id="listVentes"></div>
+      <h3>Coût par lot (IA Argent)</h3>
+      <div id="coutLots"></div>
+    </div>
+
+    <div id="tab-journal" class="card tab" style="display:none">
+      <h2>📓 Journal Mensuel - Compilation automatique</h2>
+      <div class="row no-print"><input id="jMois" type="month"><button class="b-blue" onclick="render()">Filtrer</button><button class="b-grey" onclick="window.print()">🖨️ Imprimer / PDF</button></div>
+      <div id="listJournal"></div>
+    </div>
+
+    <div id="tab-ia" class="card tab" style="display:none">
+      <h2>🤖 IA Conseiller Boutou - Pose ta question</h2>
+      <p class="small">Exemples : "que doivent faire mes ouvriers demain ?" • "combien j'ai gagné ?" • "quelle parcelle est libre ?" • "quand récolter mon maïs ?" • "stock aliment porcs ?"</p>
+      <input id="qIA" placeholder="Écris ta question ici..." onkeydown="if(event.key==='Enter') askIA()">
+      <button class="b-purple" style="width:100%" onclick="askIA()">🤖 Demander à l'IA</button>
+      <div id="repIA" class="ai2"></div>
+      <h3>🌦️ Météo Maroua - IA</h3>
+      <div id="meteoIA" class="ai">Chargement météo...</div>
+      <h3>🔍 Diagnostic Plante / Animal</h3>
+      <input id="diagTxt" placeholder="Décris : feuille jaune, porc ne mange pas...">
+      <button class="b-orange" onclick="diagnostic()">🔍 Diagnostiquer</button>
+      <div id="diagRep" class="ai"></div>
+    </div>
+
+    <div id="vueOuvrier" class="card" style="display:none">
+      <h2>👷 Mes tâches du jour</h2>
+      <p class="small">Tu ne vois que TES tâches.</p>
+      <div id="listMesTaches"></div>
+      <h3>📝 Mon historique</h3>
+      <div id="histOuvrier"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 1. GESTION PWA, MODE HORS-LIGNE ET BOUTON INSTALLER
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBtn').style.display = 'block';
+});
+function installerApp() {
+  if (!deferredPrompt) return alert("Utilise le menu de ton navigateur (⋮) puis 'Ajouter à l'écran d'accueil'.");
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => {
+    deferredPrompt = null;
+    document.getElementById('installBtn').style.display = 'none';
+  });
+}
+function updateOnlineStatus() {
+  const b = document.getElementById('offlineBadge');
+  if (navigator.onLine) { b.textContent = '🟢 En ligne'; }
+  else { b.textContent = '🟠 Mode hors-ligne actif'; }
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW:', err));
+}
+
+// 2. BASE DE DONNÉES LOCALE
+let DB = {
+  parcelles: [{nom:'P1',surf:'2'},{nom:'P2',surf:'1.5'},{nom:'P3',surf:'3'}],
+  cultures: [{parcelle:'P1',type:'Pérenne',nom:'Manguier',pieds:40,semis:'2024-03-10',recoltePrev:'2026-12-15'},{parcelle:'P3',type:'Saisonnière',nom:'Maïs',pieds:50,semis:'2026-10-01',recoltePrev:'2026-12-20'}],
+  entretiens: [{culture:'Manguier',type:'Arrosage',desc:'Arrosage P1'}],
+  recoltes: [{culture:'Maïs',qte:200,date:'2026-11-05'}],
+  lots: [{fam:'Polygastriques',esp:'Bovins',lot:'Lot A - Vaches',eff:12,stock:10},{fam:'Monogastriques',esp:'Porcs',lot:'Lot Porcs',eff:18,stock:6},{fam:'Autres',esp:'Poissons',lot:'Étang 1',eff:500,stock:20},{fam:'Autres',esp:'Abeilles',lot:'Ruches P1',eff:8,stock:0}],
+  alims: [], soins: [],
+  users: [{nom:'Moussa',role:'Berger',code:'1111',actif:true},{nom:'Aïcha',role:'Champ',code:'2222',actif:true}],
+  taches: [{user:'Moussa',bloc:'Élevage',lib:'Nourrir les porcs',perio:'Tous les jours',heure:'07:00'},{user:'Moussa',bloc:'Pérenne',lib:'Arroser les manguiers parcelle 2',perio:'Tous les 2 jours',heure:'08:00'},{user:'Aïcha',bloc:'Saisonnier',lib:'Désherber maïs P3',perio:'Chaque lundi',heure:'07:30'}],
+  validations: [], paiements: [],
+  ventes: [{type:'Récolte',prod:'Maïs',client:'Marché Maroua',qte:200,montant:80000,date:'2026-11-05'}],
+  depenses: [{desc:'Achat aliment porcs',montant:45000,date:'2026-11-02'}]
+};
+try { let s = localStorage.getItem('boutou_v8'); if (s) DB = JSON.parse(s); } catch (e) {}
+function save() { try { localStorage.setItem('boutou_v8', JSON.stringify(DB)); } catch (e) {} }
+
+let current = null;
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+function isDue(t, d) {
+  if (t.perio === 'Tous les jours') return true;
+  if (t.perio === 'Tous les 2 jours') return new Date(d).getDate() % 2 === 0;
+  if (t.perio === 'Chaque lundi') return new Date(d).getDay() === 1;
+  if (t.perio === 'Chaque mois') return new Date(d).getDate() === 1;
+  return true;
+}
+function v(id) { return document.getElementById(id).value.trim(); }
+function clearIds(ids) { ids.forEach(id => { if (document.getElementById(id)) document.getElementById(id).value = ''; }); }
+
+// 3. CONNEXION ET NAVIGATION
+function doLogin() {
+  let c = v('code');
+  if (c === '9999') current = {nom:'Gestionnaire', role:'Gestionnaire', code:'9999'};
+  else {
+    let u = DB.users.find(x => x.code === c && x.actif);
+    if (!u) return alert('Code inconnu ou bloqué. Essaie 9999, 1111 ou 2222.');
+    current = u;
+  }
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('who').textContent = 'Bonjour ' + current.nom + ' • ' + current.role;
+  document.getElementById('whoSub').textContent = current.role === 'Gestionnaire' ? 'Tu contrôles tout Boutou' : 'Code : ' + current.code + ' - Tu ne vois que tes tâches';
+  if (current.role === 'Gestionnaire') {
+    document.getElementById('tabsManager').style.display = 'flex';
