@@ -1,12 +1,20 @@
-const CACHE = 'boutou-farm-v8';
-const FILES = ['./', './index.html', './manifest.json', './icône-512.png'];
+const CACHE = 'boutou-farm-v9';
+const FILES = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
+  self.skipWaiting();
+  e.waitUntil(
+    caches.open(CACHE).then(c => c.addAll(FILES))
+  );
 });
 
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => k !== CACHE ? caches.delete(k) : null))));
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.map(k => (k !== CACHE ? caches.delete(k) : null)))
+    )
+  );
+  self.clients.claim();
 });
 
 self.addEventListener('fetch', e => {
